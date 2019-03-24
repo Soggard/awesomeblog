@@ -9,8 +9,10 @@
 >composer install
 - Create the database :
 >php bin/console doctrine:database:create
-- Create the tables
+- Create the tables :
 >php bin/console doctrine:schema:update --force
+- Populate the database :
+>php bin/console doctrine:fixtures:load
 
 ###To start server
 
@@ -21,9 +23,10 @@ The server runs at the URL *http://127.0.0.1:8000*
 
 ###TODO
 
-- Populate database
+- Populate database (DataFixture)
 - CRUD for Categories
 - CRUD for Articles
 - CRUD for Authors
 - CRUD for Comments
 - Secure with JWT
+- Documentation
