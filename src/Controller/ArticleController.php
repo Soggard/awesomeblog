@@ -3,12 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Articles;
+use App\Entity\Author;
+use App\Entity\Category;
 use App\Form\ArticleType;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -22,12 +28,19 @@ class ArticleController extends FOSRestController
      *
      * @return Response
      */
-    public function getArticlesAction(ObjectManager $manager)
+    public function getArticlesAction(ObjectManager $manager, SerializerInterface $serializer)
     {
         $articleRepository = $manager->getRepository(Articles::class);
         $articles = $articleRepository->findAll();
 
-        return $this->json($articles, Response::HTTP_OK);
+        // Serialize the object in Json
+        $jsonObject = $serializer->serialize($articles, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }
+        ]);
+
+        return new Response($jsonObject, Response::HTTP_OK, ['Content-Type' => 'application/json']);
     }
 
     /**
@@ -38,7 +51,7 @@ class ArticleController extends FOSRestController
      *
      * @return Response
      */
-    public function getArticleAction(ObjectManager $manager, $id)
+    public function getArticleAction(ObjectManager $manager, SerializerInterface $serializer, $id)
     {
         $articleRepository = $manager->getRepository(Articles::class);
         $articles = $articleRepository->find($id);
@@ -50,7 +63,14 @@ class ArticleController extends FOSRestController
             ], Response::HTTP_NOT_FOUND);
         }
 
-        return $this->json($articles, Response::HTTP_OK);
+        // Serialize the object in Json
+        $jsonObject = $serializer->serialize($articles, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }
+        ]);
+
+        return new Response($jsonObject, Response::HTTP_OK, ['Content-Type' => 'application/json']);
     }
 
     /**
