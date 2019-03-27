@@ -5,7 +5,9 @@
 {% block body %}
 <style>
     .toprow { margin-top: 60px; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code {  padding: 2px 6px; }
+    .container .row {
+        margin-top: 60px;
+    }
     .route span {
         margin-right: 20px;
     }
@@ -32,7 +34,7 @@
         <hr>
     </div>
 
-    <div class="row">
+    <div class="row" id="categories">
         <div class="col-md-12">
             <h2>Categories</h2>
         </div>
@@ -137,7 +139,7 @@
 
     <hr>
 
-    <div class="row">
+    <div class="row" id="authors">
         <div class="col-md-12">
             <h2>Authors</h2>
         </div>
@@ -242,7 +244,7 @@
 
     <hr>
 
-    <div class="row">
+    <div class="row" id="articles">
         <div class="col-md-12">
             <h2>Articles</h2>
         </div>
@@ -359,7 +361,7 @@
 
     <hr>
 
-    <div class="row">
+    <div class="row" id="comments">
         <div class="col-md-12">
             <h2>Comments</h2>
         </div>
