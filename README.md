@@ -21,12 +21,13 @@
 The server runs at the URL *http://127.0.0.1:8000*
 
 
+###Documentation
+
+All available webservices 
+
+
 ###TODO
 
-- Populate database (DataFixture)
-- CRUD for Categories
-- CRUD for Articles
-- CRUD for Authors
-- CRUD for Comments
 - Secure with JWT
 - Documentation
+- Tout tester

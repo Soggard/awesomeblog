@@ -357,5 +357,114 @@
         </div>
     </div>
 
+    <hr>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Comments</h2>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-success route">
+                    <span>GET</span>   /comments
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Get all the comments.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-success route">
+                    <span>GET</span>   /comments/{id}
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Get a comment by ID.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-warning route">
+                    <span>POST</span>   /comments
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Create a comment.
+                </p>
+
+                <p>
+                    <span class="smtitle">Parameters</span> <br>
+                </p>
+                <pre>
+                    {
+                        "comment": [COMMENT_TEXT:Text],
+                        "article": [ARTICLE_ID:Int]
+                    }
+                </pre>
+
+                <p>
+                    <span class="smtitle">Example</span> <br>
+                </p>
+                <pre>
+                    {
+                        "comment": "Superbe article !",
+                        "article": 6
+                    }
+                </pre>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-info route">
+                    <span>PUT</span>   /comments/{id}
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Update a comment.
+                </p>
+
+                <p>
+                    <span class="smtitle">Parameters</span> <br>
+                </p>
+                <pre>
+                    {
+                        "comment": [COMMENT_TEXT:Text],
+                        "article": [ARTICLE_ID:Int]
+                    }
+                </pre>
+
+                <p>
+                    <span class="smtitle">Example</span> <br>
+                </p>
+                <pre>
+                    {
+                        "comment": "Superbe article !",
+                        "article": 6
+                    }
+                </pre>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-danger route">
+                    <span>DELETE</span>   /comments/{id}
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Delete a comment and its content.
+                </p>
+            </div>
+        </div>
+    </div>
+
 </div>
 {% endblock %}
