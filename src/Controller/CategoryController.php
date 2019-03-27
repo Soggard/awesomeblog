@@ -86,7 +86,7 @@ class CategoryController extends FOSRestController
     {
         $errors = $validator->validate($category);
 
-        if (!count($errors)) {;
+        if (!count($errors)) {
 
             $manager->persist($category);
             $manager->flush();
