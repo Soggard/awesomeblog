@@ -82,39 +82,34 @@ class ArticleController extends FOSRestController
      * @param ValidatorInterface $validator
      *
      * @param SerializerInterface $serializer
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function postArticleAction(Articles $article, ObjectManager $manager, ValidatorInterface $validator, SerializerInterface $serializer)
+    public function postArticleAction(Articles $article, ObjectManager $manager, ValidatorInterface $validator, SerializerInterface $serializer, Request $request)
     {
+        $newArticle = new Articles();
+
+        if (!$newArticle instanceof Articles) {
+            return $this->json([
+                'success' => false,
+                'error' => 'Article not found'
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $articleForm = $this->createForm(ArticleType::class, $newArticle);
+        $articleForm->submit($request->request->all());
+
         $errors = $validator->validate($article);
 
-        if (!count($errors)) {
-            $authorRepository = $manager->getRepository(Author::class);
-            $author = $authorRepository->find(3);
-
-            $categoryRepository = $manager->getRepository(Category::class);
-            $category = $categoryRepository->find(3);
-
-            if (!empty($author) && !empty($category)) {
-                $article->setAuthor($author);
-                $article->setCategory($category);
-                $manager->persist($article);
-                $manager->flush();
-            } else {
-                // If the author ID or the category ID is incorrect
-                return $this->json([
-                    'success' => false,
-                    'error' => 'The author or the category provided is incorrect'
-                ], Response::HTTP_BAD_REQUEST);
-            }
-
+        if (!count($errors) ) {
             // Serialize the object in Json
-            $jsonObject = $serializer->serialize($article, 'json', [
+            $jsonObject = $serializer->serialize($newArticle, 'json', [
                 'circular_reference_handler' => function ($object) {
                     return $object->getId();
                 }
             ]);
-
+            $manager->persist($newArticle);
+            $manager->flush();
             return $this->json($jsonObject, Response::HTTP_CREATED);
         } else {
             return $this->json([
