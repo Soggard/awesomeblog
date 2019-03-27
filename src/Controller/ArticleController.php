@@ -11,12 +11,8 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ArticleController extends FOSRestController
 {
@@ -84,15 +80,38 @@ class ArticleController extends FOSRestController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function postArticleAction(Articles $article, ObjectManager $manager, ValidatorInterface $validator)
+    public function postArticleAction(Articles $article, ObjectManager $manager, ValidatorInterface $validator, SerializerInterface $serializer)
     {
         $errors = $validator->validate($article);
 
         if (!count($errors)) {
-            $manager->persist($article);
-            $manager->flush();
+            $authorRepository = $manager->getRepository(Author::class);
+            $author = $authorRepository->find(3);
 
-            return $this->json($article, Response::HTTP_CREATED);
+            $categoryRepository = $manager->getRepository(Category::class);
+            $category = $categoryRepository->find(3);
+
+            if (!empty($author) && !empty($category)) {
+                $article->setAuthor($author);
+                $article->setCategory($category);
+                $manager->persist($article);
+                $manager->flush();
+            } else {
+                // If the author ID or the category ID is incorrect
+                return $this->json([
+                    'success' => false,
+                    'error' => 'The author or the category provided is incorrect'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            // Serialize the object in Json
+            $jsonObject = $serializer->serialize($article, 'json', [
+                'circular_reference_handler' => function ($object) {
+                    return $object->getId();
+                }
+            ]);
+
+            return $this->json($jsonObject, Response::HTTP_CREATED);
         } else {
             return $this->json([
                 'success' => false,
@@ -102,7 +121,7 @@ class ArticleController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Delete("/api/articles/{id}")
+     * @FOSRest\Delete("/articles/{id}")
      *
      * @param ObjectManager $manager
      * @param $id
@@ -130,40 +149,40 @@ class ArticleController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Put("/api/products/{id}")
+     * @FOSRest\Put("/articles/{id}")
      *
-     * @ParamConverter("product", converter="fos_rest.request_body")
+     * @ParamConverter("article", converter="fos_rest.request_body")
      *
      * @param ObjectManager $manager
      * @param $id
      * @param Request $request
-     * @param Articles $product
+     * @param Articles $article
      * @param ValidatorInterface $validator
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function putArticleAction(Request $request, Articles $product, ObjectManager $manager, $id, ValidatorInterface $validator)
+    public function putArticleAction(Request $request, Articles $article, ObjectManager $manager, $id, ValidatorInterface $validator)
     {
-        $productRepository = $manager->getRepository(Articles::class);
-        $savedArticle = $productRepository->find($id);
+        $articleRepository = $manager->getRepository(Articles::class);
+        $savedArticle = $articleRepository->find($id);
 
-        if ( $product instanceof Articles) {
+        if (!$article instanceof Articles) {
             return $this->json([
                 'success' => false,
                 'error' => 'Article not found'
             ], Response::HTTP_NOT_FOUND);
         }
 
-        $productForm = $this->createForm(ArticleType::class, $savedArticle);
-        $productForm->submit($request->request->all());
+        $articleForm = $this->createForm(ArticleType::class, $savedArticle);
+        $articleForm->submit($request->request->all());
 
-        $errors = $validator->validate($product);
+        $errors = $validator->validate($article);
 
         if (!count($errors) ) {
+            // The article is updated
             $manager->persist($savedArticle);
             $manager->flush();
-
-            return $this->json($product, Response::HTTP_CREATED);
+            return $this->json($article, Response::HTTP_CREATED);
         } else {
             return $this->json([
                 'success' => false,
