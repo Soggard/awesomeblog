@@ -4,17 +4,358 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .toprow { margin-top: 60px; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code {  padding: 2px 6px; }
+    .route span {
+        margin-right: 20px;
+    }
+    .api {
+        background: #F5F5F5;
+    }
+    .smtitle {
+        font-weight: bold;
+    }
+    .api p, .api pre {
+        padding: 0 10px;
+    }
+    .api p.route {
+        padding: 5px 10px;
+        color: white;
+        font-weight: bold;
+    }
 </style>
 
-<div class="example-wrapper">
-    <h1>This blog is awesome, and this is how you may use this awesome API.</h1>
+<div class="container">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Emeric/Documents/Cours/Symfony API/awesomeblog/src/Controller/DocumentationController.php'|file_link(0) }}">src/Controller/DocumentationController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Emeric/Documents/Cours/Symfony API/awesomeblog/templates/documentation/index.html.twig'|file_link(0) }}">templates/documentation/index.html.twig</a></code></li>
-    </ul>
+    <div class="row toprow">
+        <h1>This blog is awesome, and this is how you may use this awesome API.</h1>
+        <hr>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Categories</h2>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-success route">
+                    <span>GET</span>   /categories
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Get all the categories and their content.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-success route">
+                    <span>GET</span>   /categories/{id}
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Get a category by ID with its content.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-warning route">
+                    <span>POST</span>   /categories
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Create a category.
+                </p>
+
+                <p>
+                    <span class="smtitle">Parameters</span> <br>
+                </p>
+                <pre>
+                    {
+                        "name": [CATEGORY_NAME:String]
+                    }
+                </pre>
+
+                <p>
+                    <span class="smtitle">Example</span> <br>
+                </p>
+                <pre>
+                    {
+                        "name": "People"
+                    }
+                </pre>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-info route">
+                    <span>PUT</span>   /categories/{id}
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Update a category.
+                </p>
+
+                <p>
+                    <span class="smtitle">Parameters</span> <br>
+                </p>
+                <pre>
+                    {
+                        "name": [CATEGORY_NAME:String]
+                    }
+                </pre>
+
+                <p>
+                    <span class="smtitle">Example</span> <br>
+                </p>
+                <pre>
+                    {
+                        "name": "People"
+                    }
+                </pre>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-danger route">
+                    <span>DELETE</span>   /categories/{id}
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Delete a category and its content.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Authors</h2>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-success route">
+                    <span>GET</span>   /authors
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Get all the authors and their content.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-success route">
+                    <span>GET</span>   /authors/{id}
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Get an author by ID with its articles.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-warning route">
+                    <span>POST</span>   /authors
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Create an author.
+                </p>
+
+                <p>
+                    <span class="smtitle">Parameters</span> <br>
+                </p>
+                <pre>
+                    {
+                        "name": [CATEGORY_NAME:String]
+                    }
+                </pre>
+
+                <p>
+                    <span class="smtitle">Example</span> <br>
+                </p>
+                <pre>
+                    {
+                        "name": "Christelle Efonne"
+                    }
+                </pre>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-info route">
+                    <span>PUT</span>   /authors/{id}
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Update an author.
+                </p>
+
+                <p>
+                    <span class="smtitle">Parameters</span> <br>
+                </p>
+                <pre>
+                    {
+                        "name": [AUTHOR_NAME:String]
+                    }
+                </pre>
+
+                <p>
+                    <span class="smtitle">Example</span> <br>
+                </p>
+                <pre>
+                    {
+                        "name": "Christelle Efonne"
+                    }
+                </pre>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-danger route">
+                    <span>DELETE</span>   /authors/{id}
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Delete an author and its articles.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Articles</h2>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-success route">
+                    <span>GET</span>   /articles
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Get all the articles and their content.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-success route">
+                    <span>GET</span>   /articles/{id}
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Get an article by ID with its comments.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-warning route">
+                    <span>POST</span>   /articles
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Create an article.
+                </p>
+
+                <p>
+                    <span class="smtitle">Parameters</span> <br>
+                </p>
+                <pre>
+                    {
+                        "title": [ARTICLE_TITLE:String],
+                        "text": [ARTICLE_TEXT:String],
+                        "category": [CATEGORY_ID:Int],
+                        "author": [AUTHOR_ID:Int]
+                    }
+                </pre>
+
+                <p>
+                    <span class="smtitle">Example</span> <br>
+                </p>
+                <pre>
+                    {
+                        "title": "Recette de la tartiflette",
+                        "text": "Faites de la tartiflette, c'est délicieux !",
+                        "category": 4,
+                        "author": 2
+                    }
+                </pre>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-info route">
+                    <span>PUT</span>   /articles/{id}
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Update an article.
+                </p>
+
+                <p>
+                    <span class="smtitle">Parameters</span> <br>
+                </p>
+                <pre>
+                    {
+                        "title": [ARTICLE_TITLE:String],
+                        "text": [ARTICLE_TEXT:String],
+                        "category": [CATEGORY_ID:Int],
+                        "author": [AUTHOR_ID:Int]
+                    }
+                </pre>
+
+                <p>
+                    <span class="smtitle">Example</span> <br>
+                </p>
+                <pre>
+                    {
+                        "title": "Recette de la tartiflette",
+                        "text": "Faites de la tartiflette, c'est délicieux !",
+                        "category": 4,
+                        "author": 2
+                    }
+                </pre>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="api">
+                <p class="bg-danger route">
+                    <span>DELETE</span>   /articles/{id}
+                </p>
+                <p>
+                    <span class="smtitle">Description</span> <br>
+                    Delete an article and its articles.
+                </p>
+            </div>
+        </div>
+    </div>
+
 </div>
 {% endblock %}
