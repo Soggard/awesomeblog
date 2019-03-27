@@ -9,6 +9,7 @@ use App\Form\ArticleType;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -22,6 +23,7 @@ class ArticleController extends FOSRestController
      *
      * @param ObjectManager $manager
      *
+     * @param SerializerInterface $serializer
      * @return Response
      */
     public function getArticlesAction(ObjectManager $manager, SerializerInterface $serializer)
@@ -43,6 +45,7 @@ class ArticleController extends FOSRestController
      * @FOSRest\Get("/articles/{id}")
      *
      * @param ObjectManager $manager
+     * @param SerializerInterface $serializer
      * @param $id
      *
      * @return Response
@@ -50,9 +53,9 @@ class ArticleController extends FOSRestController
     public function getArticleAction(ObjectManager $manager, SerializerInterface $serializer, $id)
     {
         $articleRepository = $manager->getRepository(Articles::class);
-        $articles = $articleRepository->find($id);
+        $article = $articleRepository->find($id);
 
-        if (!$articles instanceof  Articles) {
+        if (!$article instanceof  Articles) {
             $this->json([
                 'success' => false,
                 'error' => 'Article not found'
@@ -60,7 +63,7 @@ class ArticleController extends FOSRestController
         }
 
         // Serialize the object in Json
-        $jsonObject = $serializer->serialize($articles, 'json', [
+        $jsonObject = $serializer->serialize($article, 'json', [
             'circular_reference_handler' => function ($object) {
                 return $object->getId();
             }
@@ -74,10 +77,11 @@ class ArticleController extends FOSRestController
      *
      * @ParamConverter("article", converter="fos_rest.request_body")
      *
-     * @param ObjectManager $manager
      * @param Articles $article
+     * @param ObjectManager $manager
      * @param ValidatorInterface $validator
      *
+     * @param SerializerInterface $serializer
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function postArticleAction(Articles $article, ObjectManager $manager, ValidatorInterface $validator, SerializerInterface $serializer)
@@ -166,7 +170,7 @@ class ArticleController extends FOSRestController
         $articleRepository = $manager->getRepository(Articles::class);
         $savedArticle = $articleRepository->find($id);
 
-        if (!$article instanceof Articles) {
+        if (!$savedArticle instanceof Articles) {
             return $this->json([
                 'success' => false,
                 'error' => 'Article not found'
