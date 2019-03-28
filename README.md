@@ -42,6 +42,5 @@ All available webservices
 
 ###TODO
 
-- Secure with JWT
 - Read documentation again
 - Test everything again
