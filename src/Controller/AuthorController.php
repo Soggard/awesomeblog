@@ -17,7 +17,7 @@ class AuthorController extends FOSRestController
 {
 
     /**
-     * @FOSRest\Get("/authors")
+     * @FOSRest\Get("/api/authors")
      *
      * @param ObjectManager $manager
      *
@@ -40,7 +40,7 @@ class AuthorController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Get("/authors/{id}")
+     * @FOSRest\Get("/api/authors/{id}")
      *
      * @param ObjectManager $manager
      * @param SerializerInterface $serializer
@@ -71,7 +71,7 @@ class AuthorController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Post("/authors")
+     * @FOSRest\Post("/api/authors")
      *
      * @ParamConverter("author", converter="fos_rest.request_body")
      *
@@ -108,7 +108,7 @@ class AuthorController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Delete("/authors/{id}")
+     * @FOSRest\Delete("/api/authors/{id}")
      *
      * @param ObjectManager $manager
      * @param $id
@@ -136,7 +136,7 @@ class AuthorController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Put("/authors/{id}")
+     * @FOSRest\Put("/api/authors/{id}")
      *
      * @ParamConverter("author", converter="fos_rest.request_body")
      *

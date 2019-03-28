@@ -17,7 +17,7 @@ class CategoryController extends FOSRestController
 {
 
     /**
-     * @FOSRest\Get("/categories")
+     * @FOSRest\Get("/api/categories")
      *
      * @param ObjectManager $manager
      *
@@ -40,7 +40,7 @@ class CategoryController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Get("/categories/{id}")
+     * @FOSRest\Get("/api/categories/{id}")
      *
      * @param ObjectManager $manager
      * @param SerializerInterface $serializer
@@ -71,7 +71,7 @@ class CategoryController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Post("/categories")
+     * @FOSRest\Post("/api/categories")
      *
      * @ParamConverter("category", converter="fos_rest.request_body")
      *
@@ -108,7 +108,7 @@ class CategoryController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Delete("/categories/{id}")
+     * @FOSRest\Delete("/api/categories/{id}")
      *
      * @param ObjectManager $manager
      * @param $id
@@ -136,7 +136,7 @@ class CategoryController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Put("/categories/{id}")
+     * @FOSRest\Put("/api/categories/{id}")
      *
      * @ParamConverter("category", converter="fos_rest.request_body")
      *

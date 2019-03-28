@@ -2,9 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Articles;
-use App\Entity\Author;
-use App\Entity\Category;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -20,7 +17,7 @@ class CommentController extends FOSRestController
 {
 
     /**
-     * @FOSRest\Get("/comments")
+     * @FOSRest\Get("/api/comments")
      *
      * @param ObjectManager $manager
      *
@@ -43,7 +40,7 @@ class CommentController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Get("/comments/{id}")
+     * @FOSRest\Get("/api/comments/{id}")
      *
      * @param ObjectManager $manager
      * @param SerializerInterface $serializer
@@ -74,7 +71,7 @@ class CommentController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Post("/comments")
+     * @FOSRest\Post("/api/comments")
      *
      * @ParamConverter("comment", converter="fos_rest.request_body")
      *
@@ -124,7 +121,7 @@ class CommentController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Delete("/comments/{id}")
+     * @FOSRest\Delete("/api/comments/{id}")
      *
      * @param ObjectManager $manager
      * @param $id
@@ -152,7 +149,7 @@ class CommentController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Put("/comments/{id}")
+     * @FOSRest\Put("/api/comments/{id}")
      *
      * @ParamConverter("comment", converter="fos_rest.request_body")
      *

@@ -19,7 +19,7 @@ class ArticleController extends FOSRestController
 {
 
     /**
-     * @FOSRest\Get("/articles")
+     * @FOSRest\Get("/api/articles")
      *
      * @param ObjectManager $manager
      *
@@ -42,7 +42,7 @@ class ArticleController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Get("/articles/{id}")
+     * @FOSRest\Get("/api/articles/{id}")
      *
      * @param ObjectManager $manager
      * @param SerializerInterface $serializer
@@ -73,7 +73,7 @@ class ArticleController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Post("/articles")
+     * @FOSRest\Post("/api/articles")
      *
      * @ParamConverter("article", converter="fos_rest.request_body")
      *
@@ -120,7 +120,7 @@ class ArticleController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Delete("/articles/{id}")
+     * @FOSRest\Delete("/api/articles/{id}")
      *
      * @param ObjectManager $manager
      * @param $id
@@ -148,7 +148,7 @@ class ArticleController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Put("/articles/{id}")
+     * @FOSRest\Put("/api/articles/{id}")
      *
      * @ParamConverter("article", converter="fos_rest.request_body")
      *
