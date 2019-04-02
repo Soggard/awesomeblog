@@ -37,7 +37,7 @@ To log in :
 
 ###Documentation
 
-All available webservices 
+All available webservices are described in the homepage : *http://127.0.0.1:8000/*
 
 
 ###TODO
